@@ -259,3 +259,16 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/miniSQL/instruction0.txt
+/miniSQL/instruction1.txt
+/miniSQL/instruction2.txt
+/miniSQL/instruction3.txt
+/miniSQL/instruction4.txt
+/miniSQL/instruction5.txt
+/miniSQL/instruction6.txt
+/miniSQL/instruction8.txt
+/miniSQL/instruction7.txt
+/miniSQL/instruction9.txt
+/student2.table
+/student2_PRIMARY_KEY.index
+/student.txt
