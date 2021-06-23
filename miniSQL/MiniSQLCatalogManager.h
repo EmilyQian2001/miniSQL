@@ -5,7 +5,6 @@
 #include <vector>
 #include <set>
 #include <map>
-using std::initializer_list;
 using std::vector;
 using std::string;
 using std::map;
@@ -18,22 +17,25 @@ struct Attr {
 };
 struct Table {
     vector<Attr> attrs;
-    size_t record_per_block;
-    int record_count;
+    size_t record_length;
+    int occupied_record_count;
 };
 using table_file = map<string, Table>;
 
 struct Index {
-    Index(string name, set<string> keys) : name(name), keys(keys) {}
+    Index(string name, int rank, set<string> keys) : name(name), rank(rank), keys(keys) {}
     string name;
+    int rank;
     set<string> keys;
 };
 using index_file = map<string, vector<Index>>;
 
 class CatalogManager {
 public:
-    index_file &getIndexFile() { return index; }
-    table_file &getTableFile() { return table; }
+    CatalogManager(const char *meta_table_file_name, const char *meta_index_file_name);
+    ~CatalogManager();
+
+    void increaseRecordCount(const string &tablename);
 
     const Table &getTableInfo(const string &tablename) const;
     void addTableInfo(const string &tablename, const vector<Attr> &attrs);
@@ -41,11 +43,13 @@ public:
 
     bool findIndex(const string &tablename, const string &indexname) const;
     const vector<Index> &getIndexInfo(const string &tablename) const;
-    void addIndexInfo(const string &tablename ,const string &indexname, const set<string> &keys);
+    void addIndexInfo(const string &tablename ,const string &indexname, int rank, const set<string> &keys);
     void deleteIndexInfo(const string &tablename, const string &indexname);
     void deleteIndexInfo(const string &tablename);
 
 private:
+    string meta_table_file_name;
+    string meta_index_file_name;
     table_file table;
     index_file index;
 };
