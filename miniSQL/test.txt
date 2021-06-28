@@ -1,0 +1,9 @@
+execfile student.txt;
+
+select * from student2 where name='name7468';
+
+create index idx on student2(name);
+
+select * from student2 where name='name7468';
+
+quit；
